@@ -1,0 +1,32 @@
+<div class="contenedor">
+  <form [formGroup]="form" (submit)="aceptar()">
+    <mat-form-field class="example-full-width">
+      <mat-label>Código</mat-label>
+      <input matInput hidden placeholder="Código" formControlName="id">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input matInput required placeholder="Name" formControlName="nameAuthor">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input matInput required placeholder="Email" formControlName="emailAuthor">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Birthday</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthDateAuthor"
+      max="maxFecha">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button type="submit" color="primary">Aceptar</button>
+    <button mat-raised-button color="warn" routerLink="/authors">Cancelar</button>
+    <p>{{mensaje}}</p>
+
+  </form>
+</div>
