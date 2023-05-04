@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/enviroment';
 import { Author } from '../model/authors';
 
@@ -13,6 +13,7 @@ export class AuthorService {
   private url = `${baseUrl}/authors`;//alt+96
 
   constructor(private http:HttpClient) { } //inyectar httpClient
+  private listaCambio = new Subject<Author[]>();
 
   list():Observable<any>{
     return this.http.get<Author[]>(this.url); //http://localhost:5000/authors
@@ -29,6 +30,13 @@ export class AuthorService {
   }
   update(aut: Author){
     return this.http.put(this.url+"/"+aut.id, aut);
+  }
+
+  setList(listaNueva: Author[]) {
+    this.listaCambio.next(listaNueva);
+  }
+  getLista() {
+    return this.listaCambio.asObservable();
   }
 
 }

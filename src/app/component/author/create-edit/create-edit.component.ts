@@ -61,18 +61,37 @@ export class CreateEditComponent implements OnInit {
     if (this.form.valid) {
         if (this.edicion) {
           //registrarlo en la base de  datos
-          this.authorService.update(this.author).subscribe((data) =>
+          /*this.authorService.update(this.author).subscribe((data) =>
             this.router.navigate(['authors']).then(() => {
               window.location.reload();
             })
-          );
+          );*/
+
+          //actualiza el registro y tambien el listado
+
+          this.authorService.update(this.author).subscribe((data) => {
+            this.authorService.list().subscribe(data => {
+              this.authorService.setList(data);//(enviando el listado al suscriptor)
+            })
+          });
+
+
+
         } else {
           //registrarlo en la base de  datos
-          this.authorService.insert(this.author).subscribe((data) =>
+          /*this.authorService.insert(this.author).subscribe((data) =>
             this.router.navigate(['authors']).then(() => {
               window.location.reload();
             })
-          );
+          );*/
+
+          this.authorService.insert(this.author).subscribe((data) => {
+            this.authorService.list().subscribe(data => {
+              this.authorService.setList(data);
+            })
+          });
+
+
         }
       } else{
         this.mensaje = "Agrege campos omitidos";
